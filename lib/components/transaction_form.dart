@@ -1,30 +1,30 @@
 import 'package:flutter/material.dart';
 
-class TransactionForm extends StatefulWidget {
-  const TransactionForm({super.key});
+class TransactionForm extends StatelessWidget {
+  final title = TextEditingController();
+  final value = TextEditingController();
+  final void Function(String, double) onPressed;
+  TransactionForm(this.onPressed, {super.key});
 
-  @override
-  State<TransactionForm> createState() => _TransactionFormState();
-}
-
-class _TransactionFormState extends State<TransactionForm> {
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(8),
       child: Column(
         children: [
-          const TextField(
-            // controller: title,
+          TextField(
+            keyboardType: TextInputType.text,
+            controller: title,
             // onChanged: (newValor) => value = newValor,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               label: Text("Titulo"),
             ),
           ),
-          const TextField(
-            // controller: value,
+          TextField(
+            keyboardType: TextInputType.number,
+            controller: value,
             // onChanged: (newValor) => title = newValor,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               label: Text("Valor (R\$)"),
             ),
           ),
@@ -34,7 +34,9 @@ class _TransactionFormState extends State<TransactionForm> {
                 TextStyle(color: Colors.black),
               ),
             ),
-            onPressed: () {},
+            onPressed: () {
+              onPressed(title.text, double.parse(value.text));
+            },
             child: const Text("Registrar"),
           )
         ],

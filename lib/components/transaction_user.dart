@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:daily_funds/components/transaction_form.dart';
 import 'package:daily_funds/components/transaction_list.dart';
 import 'package:daily_funds/models/transaction.dart';
@@ -11,30 +13,34 @@ class TransactionUser extends StatefulWidget {
 }
 
 class _TransactionUserState extends State<TransactionUser> {
-  final _transactions = [
-    Transaction(
-      id: '1',
-      title: "Teclado mecânico",
-      value: 120.0,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: '2',
-      title: "Sapato",
-      value: 130.0,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: '3',
-      title: "Monitor 24°",
-      value: 790.20,
-      date: DateTime.now(),
-    ),
-  ];
+  final List<Transaction> _transactions = [];
+
+  //Função para adcionar uma nova transição na lista
+  void addTransaction(String title, double value) {
+    final newTransaction = Transaction(
+        id: Random().nextDouble().toString(),
+        title: title,
+        value: value,
+        date: DateTime.now());
+
+    setState(() {
+      _transactions.add(newTransaction);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [TransactionList(_transactions), const TransactionForm()],
+      children: [
+        _transactions.isNotEmpty
+            ? TransactionList(_transactions)
+            : const SizedBox(
+                child: Text("Sem dados registrados"),
+              ),
+        TransactionForm(
+          addTransaction,
+        ),
+      ],
     );
   }
 }

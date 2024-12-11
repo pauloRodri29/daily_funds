@@ -3,9 +3,6 @@ import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
   // const HomePage({super.key});
-  final value = TextEditingController();
-  final title = TextEditingController();
-
   HomePage({super.key});
 
   @override
